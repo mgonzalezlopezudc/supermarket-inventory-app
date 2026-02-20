@@ -1,0 +1,38 @@
+# Archivos generados por Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Entorno virtual
+.venv/
+venv/
+env/
+ENV/
+
+# Base de datos SQLite local
+*.db
+*.sqlite3
+
+# Archivos de entorno y configuración local
+.env
+.flaskenv
+
+# Herramientas de pruebas y cobertura
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs
+*.log
+
+# Carpetas y archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# VSCode / IDEs
+.vscode/
+.idea/
+
+# Archivos temporales
+*.swp
+*.swo
