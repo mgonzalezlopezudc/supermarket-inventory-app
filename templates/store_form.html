@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% if CURRENT_LANGUAGE == 'es' %}{% if store %}Editar Tienda{% else %}Nueva Tienda{% endif %}{% else %}{% if store
+%}Edit Store{% else %}New Store{% endif %}{% endif %} | InventoryPro
+{% endblock %}
+
+{% block content %}
+<div class="detail-header">
+    <div class="detail-info glass-card" style="width: 100%; max-width: 600px; margin: 0 auto;">
+        <h2 style="margin-bottom: 2rem; color: var(--primary);">
+            {% if CURRENT_LANGUAGE == 'es' %}
+            {% if store %}Editar Tienda: {{ store.name }}{% else %}Registrar Nueva Tienda{% endif %}
+            {% else %}
+            {% if store %}Edit Store: {{ store.name }}{% else %}Register New Store{% endif %}
+            {% endif %}
+        </h2>
+
+        <form method="POST"
+            action="{% if store %}{{ url_for('store_edit', store_id=store.id) }}{% else %}{{ url_for('store_new') }}{% endif %}">
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">
+                    {% if CURRENT_LANGUAGE == 'es' %}Nombre de la Tienda{% else %}Store Name{% endif %}
+                </label>
+                <input type="text" name="name" value="{{ store.name if store else '' }}" required
+                    style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--card-border); background: rgba(0,0,0,0.2); color: white;">
+            </div>
+
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">
+                    {% if CURRENT_LANGUAGE == 'es' %}URL de la Imagen{% else %}Image URL{% endif %}
+                </label>
+                <input type="url" name="image" value="{{ store.image if store else '' }}"
+                    style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--card-border); background: rgba(0,0,0,0.2); color: white;">
+            </div>
+
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">
+                    {% if CURRENT_LANGUAGE == 'es' %}Dirección Física{% else %}Physical Address{% endif %}
+                </label>
+                <input type="text" name="address" value="{{ store.address if store else '' }}" required
+                    style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--card-border); background: rgba(0,0,0,0.2); color: white;">
+            </div>
+
+            <div style="margin-bottom: 2rem;">
+                <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">
+                    {% if CURRENT_LANGUAGE == 'es' %}Ubicación (GeoJSON){% else %}Location (GeoJSON){% endif %}
+                </label>
+                <textarea name="location" rows="3"
+                    style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--card-border); background: rgba(0,0,0,0.2); color: white;">{{ store.location if store else '{"type":"Point","coordinates":[0, 0]}' }}</textarea>
+            </div>
+
+            <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                <a href="{% if store %}{{ url_for('store_detail', store_id=store.id) }}{% else %}{{ url_for('stores_index') }}{% endif %}"
+                    style="padding: 0.75rem 1.5rem; color: var(--text-muted); text-decoration: none;">
+                    {% if CURRENT_LANGUAGE == 'es' %}Cancelar{% else %}Cancel{% endif %}
+                </a>
+                <button type="submit" class="item-action" style="border: none; cursor: pointer;">
+                    {% if CURRENT_LANGUAGE == 'es' %}Guardar Tienda{% else %}Save Store{% endif %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

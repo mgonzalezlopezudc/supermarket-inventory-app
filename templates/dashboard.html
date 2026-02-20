@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | InventoryPro{% endblock %}
+
+{% block content %}
+<h1 class="page-title">{% if CURRENT_LANGUAGE == 'es' %}Resumen Global{% else %}Global Summary{% endif %}</h1>
+
+<div class="stats-grid">
+    <div class="glass-card stat-item">
+        <div class="stat-value">{{ total_stores }}</div>
+        <div class="stat-label">{% if CURRENT_LANGUAGE == 'es' %}Tiendas Activas{% else %}Active Stores{% endif %}</div>
+    </div>
+
+    <div class="glass-card stat-item">
+        <div class="stat-value">{{ total_products }}</div>
+        <div class="stat-label">{% if CURRENT_LANGUAGE == 'es' %}Referencias (Catálogo){% else %}Product References{%
+            endif %}</div>
+    </div>
+
+    <div class="glass-card stat-item">
+        <div class="stat-value">{{ total_stock }}</div>
+        <div class="stat-label">{% if CURRENT_LANGUAGE == 'es' %}Unidades en Stock{% else %}Units in Stock{% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="glass-card">
+    <h2 style="margin-bottom: 1rem;">{% if CURRENT_LANGUAGE == 'es' %}Accesos Rápidos{% else %}Quick Access{% endif %}
+    </h2>
+    <p style="color: var(--text-muted); margin-bottom: 2rem;">{% if CURRENT_LANGUAGE == 'es' %}Navega por la
+        infraestructura para un control en detalle.{% else %}Navigate the infrastructure for detailed control.{% endif
+        %}</p>
+
+    <div style="display: flex; gap: 1rem;">
+        <a href="{{ url_for('stores_index') }}" class="item-action">{% if CURRENT_LANGUAGE == 'es' %}Ver Tiendas{% else
+            %}View Stores{% endif %}</a>
+        <a href="{{ url_for('products_index') }}" class="item-action">{% if CURRENT_LANGUAGE == 'es' %}Explorar
+            Productos{% else %}Explore Products{% endif %}</a>
+    </div>
+</div>
+{% endblock %}

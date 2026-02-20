@@ -21,3 +21,4 @@ En el contexto de la aplicación, podemos definir diferentes *"Agentes"* lógico
 ## 5. REGLAS DE DESARROLLO (DEVELOPMENT RULES)
 - Los archivos `TASK.md` y `implementation_plan.md` generados en el contexto del agente/asistente SIEMPRE deben generarse y actualizarse en **CASTELLANO**.
 - El entorno virtual de desarrollo en Python debe llamarse siempre **`.venv`** (nunca `venv`). Este agente, cuando genere comandos de script, se asegurará de apuntar siempre a `source .venv/bin/activate`.
+- Al inicializar y trabajar con repositorios **Git**, la rama principal a utilizar será siempre **`main`** (en lugar de `master`).

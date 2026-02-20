@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% if CURRENT_LANGUAGE == 'es' %}Productos{% else %}Products{% endif %} | InventoryPro
+{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h1 class="page-title" style="margin-bottom: 0;">{% if CURRENT_LANGUAGE == 'es' %}Catálogo de Productos{% else
+        %}Product Catalog{% endif %}</h1>
+    <a href="{{ url_for('product_new') }}" class="item-action"
+        style="background: var(--primary); color: var(--bg-dark);">
+        {% if CURRENT_LANGUAGE == 'es' %}+ Nuevo Producto{% else %}+ New Product{% endif %}
+    </a>
+</div>
+
+<div class="items-grid">
+    {% for product in products %}
+    <div class="glass-card item-card">
+        {% if product.image %}
+        <img src="{{ product.image }}" alt="{{ product.name }}" class="item-image">
+        {% endif %}
+        <div class="item-content">
+            <h3 class="item-title">{{ product.name }}</h3>
+            <p class="item-subtitle">{{ product.size }}</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <span style="font-size: 1.5rem; font-weight: 800; color: var(--primary);">${{
+                    "%.2f"|format(product.price) }}</span>
+            </div>
+            <a href="{{ url_for('product_detail', product_id=product.id) }}" class="item-action">
+                {% if CURRENT_LANGUAGE == 'es' %}Ver Disponibilidad{% else %}View Availability{% endif %}
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

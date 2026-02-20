@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% if CURRENT_LANGUAGE == 'es' %}Tiendas{% else %}Stores{% endif %} | InventoryPro
+{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h1 class="page-title" style="margin-bottom: 0;">{% if CURRENT_LANGUAGE == 'es' %}Nuestras Tiendas{% else %}Our
+        Stores{% endif %}</h1>
+    <a href="{{ url_for('store_new') }}" class="item-action" style="background: var(--primary); color: var(--bg-dark);">
+        {% if CURRENT_LANGUAGE == 'es' %}+ Nueva Tienda{% else %}+ New Store{% endif %}
+    </a>
+</div>
+
+<div class="items-grid">
+    {% for store in stores %}
+    <div class="glass-card item-card">
+        {% if store.image %}
+        <img src="{{ store.image }}" alt="{{ store.name }}" class="item-image">
+        {% endif %}
+        <div class="item-content">
+            <h3 class="item-title">{{ store.name }}</h3>
+            <p class="item-subtitle">{{ store.address }}</p>
+            <a href="{{ url_for('store_detail', store_id=store.id) }}" class="item-action">
+                {% if CURRENT_LANGUAGE == 'es' %}Ver Detalles{% else %}View Details{% endif %}
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

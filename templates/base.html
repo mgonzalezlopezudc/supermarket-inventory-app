@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="{{ CURRENT_LANGUAGE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Supermarket Inventory{% endblock %}</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{{ url_for('dashboard') }}" class="nav-brand">InventoryPro</a>
+        
+        <div class="nav-links">
+            <a href="{{ url_for('dashboard') }}" class="nav-item {% if request.endpoint == 'dashboard' %}active{% endif %}">Dashboard</a>
+            <a href="{{ url_for('stores_index') }}" class="nav-item {% if request.endpoint and 'store' in request.endpoint %}active{% endif %}">Stores</a>
+            <a href="{{ url_for('products_index') }}" class="nav-item {% if request.endpoint and 'product' in request.endpoint %}active{% endif %}">Products</a>
+        </div>
+
+        <div class="lang-switch">
+            <a href="{{ url_for('set_lang', lang='es') }}" class="{% if CURRENT_LANGUAGE == 'es' %}active{% endif %}">ES</a>
+            <a href="{{ url_for('set_lang', lang='en') }}" class="{% if CURRENT_LANGUAGE == 'en' %}active{% endif %}">EN</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

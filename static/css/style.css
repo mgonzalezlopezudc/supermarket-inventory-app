@@ -1,0 +1,317 @@
+:root {
+  --bg-dark: #0b0f19;
+  --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --primary: #38bdf8;
+  --primary-glow: rgba(56, 189, 248, 0.5);
+  --accent: #f43f5e;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--bg-dark);
+  background-image: var(--bg-gradient);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* NAVBAR TIPO GLASSMORPHISM */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--card-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-brand {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px var(--primary-glow);
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-item {
+  color: var(--text-main);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-item:hover, .nav-item.active {
+  color: var(--primary);
+}
+
+.nav-item::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: var(--primary);
+  transition: width 0.3s ease;
+  box-shadow: 0 0 8px var(--primary-glow);
+}
+
+.nav-item:hover::after, .nav-item.active::after {
+  width: 100%;
+}
+
+.lang-switch a {
+  margin-left: 10px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  text-decoration: none;
+  background: var(--card-bg);
+  color: var(--text-muted);
+  border: 1px solid var(--card-border);
+  transition: 0.3s;
+}
+
+.lang-switch a.active {
+  background: var(--primary);
+  color: #000;
+  font-weight: bold;
+  border-color: var(--primary);
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+/* MAIN CONTAINER */
+.container {
+  padding: 3rem 2rem;
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+h1.page-title {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  position: relative;
+  display: inline-block;
+}
+
+h1.page-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 50px;
+  height: 4px;
+  background: var(--primary);
+  border-radius: 2px;
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+/* GLASSMORPHISM CARDS */
+.glass-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.glass-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5), 0 0 15px var(--card-border);
+}
+
+/* DASHBOARD STATS */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 4rem;
+  font-weight: 800;
+  background: -webkit-linear-gradient(45deg, var(--primary), #818cf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* GRID LAYOUTS PARA TIENDAS Y PRODUCTOS */
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.item-card {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.item-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.item-content {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.item-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.item-subtitle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+
+.item-action {
+  display: inline-block;
+  text-align: center;
+  padding: 0.75rem 1.5rem;
+  background: rgba(56, 189, 248, 0.1);
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.item-action:hover {
+  background: var(--primary);
+  color: #0f172a;
+  box-shadow: 0 0 15px var(--primary-glow);
+}
+
+/* LISTAS DE INVENTARIO EN DETALLES */
+.inventory-list {
+  list-style: none;
+  margin-top: 2rem;
+}
+
+.inventory-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid var(--card-border);
+  transition: background 0.2s;
+}
+
+.inventory-item:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.inventory-item:last-child {
+  border-bottom: none;
+}
+
+.stock-badge {
+  background: rgba(16, 185, 129, 0.1);
+  color: #34d399;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid rgba(52, 211, 153, 0.3);
+}
+
+.stock-badge.low {
+  background: rgba(244, 63, 94, 0.1);
+  color: var(--accent);
+  border-color: rgba(244, 63, 94, 0.3);
+}
+
+/* UTILIDADES DETALLE */
+.detail-header {
+  display: flex;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.detail-image {
+  width: 400px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.detail-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.detail-info h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.detail-info p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}

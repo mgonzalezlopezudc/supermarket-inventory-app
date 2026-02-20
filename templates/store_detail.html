@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}{{ store.name }} | InventoryPro{% endblock %}
+
+{% block content %}
+<div class="detail-header">
+    {% if store.image %}
+    <img src="{{ store.image }}" alt="{{ store.name }}" class="detail-image glass-card"
+        style="padding: 0; box-sizing: content-box;">
+    {% endif %}
+
+    <div class="detail-info glass-card">
+        <h2>{{ store.name }}</h2>
+        <p><strong>{% if CURRENT_LANGUAGE == 'es' %}Dirección:{% else %}Address:{% endif %}</strong> {{ store.address }}
+        </p>
+        <p><strong>{% if CURRENT_LANGUAGE == 'es' %}Coordenadas:{% else %}Coordinates:{% endif %}</strong> {{
+            store.location }}</p>
+
+        <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href="{{ url_for('stores_index') }}" class="item-action">{% if CURRENT_LANGUAGE == 'es' %}← Volver a
+                Tiendas{% else %}← Back to Stores{% endif %}</a>
+            <div style="flex: 1;"></div>
+            <a href="{{ url_for('store_edit', store_id=store.id) }}" class="item-action"
+                style="background: rgba(255,255,255,0.1); border-color: var(--text-muted); color: var(--text-main);">
+                {% if CURRENT_LANGUAGE == 'es' %}✎ Editar{% else %}✎ Edit{% endif %}
+            </a>
+            <form action="{{ url_for('store_delete', store_id=store.id) }}" method="POST" style="display: inline;"
+                onsubmit="return confirm('{% if CURRENT_LANGUAGE == 'es' %}¿Estás seguro de eliminar esta tienda y todo su stock?{% else %}Are you sure to delete this store and all its stock?{% endif %}');">
+                <button type="submit" class="item-action"
+                    style="background: rgba(244, 63, 94, 0.1); border-color: var(--accent); color: var(--accent); cursor: pointer;">
+                    {% if CURRENT_LANGUAGE == 'es' %}🗑 Eliminar{% else %}🗑 Delete{% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<h2 class="page-title" style="font-size: 2rem;">{% if CURRENT_LANGUAGE == 'es' %}Inventario de la Tienda{% else %}Store
+    Inventory{% endif %}</h2>
+
+<div class="glass-card" style="padding: 1rem 2rem;">
+    {% if inventory %}
+    <ul class="inventory-list">
+        {% for item in inventory %}
+        <li class="inventory-item">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <img src="{{ item.product_ref.image }}"
+                    style="width: 50px; height: 50px; border-radius: 8px; object-fit: cover;">
+                <div>
+                    <h4 style="font-size: 1.1rem;">{{ item.product_ref.name }}</h4>
+                    <span style="color: var(--text-muted); font-size: 0.9rem;">{{ item.shelf_ref.name }}</span>
+                </div>
+            </div>
+
+            <div style="text-align: right;">
+                <span class="stock-badge {% if item.qty < 20 %}low{% endif %}">
+                    {{ item.qty }} {% if CURRENT_LANGUAGE == 'es' %}unidades{% else %}units{% endif %}
+                </span>
+                <div style="color: var(--text-muted); font-size: 0.8rem; margin-top: 4px;">
+                    {% if CURRENT_LANGUAGE == 'es' %}Total Tienda:{% else %}Store Total:{% endif %} {{ item.qty_total }}
+                </div>
+            </div>
+
+            <a href="{{ url_for('product_detail', product_id=item.product_ref.id) }}" class="item-action"
+                style="padding: 0.5rem 1rem;">
+                {% if CURRENT_LANGUAGE == 'es' %}Ver Producto{% else %}View Product{% endif %}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>{% if CURRENT_LANGUAGE == 'es' %}No hay inventario registrado en esta tienda.{% else %}No inventory registered in
+        this store.{% endif %}</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.name }} | InventoryPro{% endblock %}
+
+{% block content %}
+<div class="detail-header">
+    {% if product.image %}
+    <img src="{{ product.image }}" alt="{{ product.name }}" class="detail-image glass-card"
+        style="padding: 0; box-sizing: content-box;">
+    {% endif %}
+
+    <div class="detail-info glass-card">
+        <h2>{{ product.name }}</h2>
+        <p><strong>{% if CURRENT_LANGUAGE == 'es' %}Formato:{% else %}Format:{% endif %}</strong> {{ product.size }}</p>
+        <p><strong>{% if CURRENT_LANGUAGE == 'es' %}Precio Unitario:{% else %}Unit Price:{% endif %}</strong> <span
+                style="color: var(--primary); font-size: 1.5rem; font-weight: bold;">${{ "%.2f"|format(product.price)
+                }}</span></p>
+
+        <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href="{{ url_for('products_index') }}" class="item-action">{% if CURRENT_LANGUAGE == 'es' %}← Volver al
+                Catálogo{% else %}← Back to Catalog{% endif %}</a>
+            <div style="flex: 1;"></div>
+            <a href="{{ url_for('product_edit', product_id=product.id) }}" class="item-action"
+                style="background: rgba(255,255,255,0.1); border-color: var(--text-muted); color: var(--text-main);">
+                {% if CURRENT_LANGUAGE == 'es' %}✎ Editar{% else %}✎ Edit{% endif %}
+            </a>
+            <form action="{{ url_for('product_delete', product_id=product.id) }}" method="POST" style="display: inline;"
+                onsubmit="return confirm('{% if CURRENT_LANGUAGE == 'es' %}¿Estás seguro de eliminar este producto del catálogo?{% else %}Are you sure to delete this product from the catalog?{% endif %}');">
+                <button type="submit" class="item-action"
+                    style="background: rgba(244, 63, 94, 0.1); border-color: var(--accent); color: var(--accent); cursor: pointer;">
+                    {% if CURRENT_LANGUAGE == 'es' %}🗑 Eliminar{% else %}🗑 Delete{% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<h2 class="page-title" style="font-size: 2rem;">{% if CURRENT_LANGUAGE == 'es' %}Disponibilidad en Tiendas{% else
+    %}Store Availability{% endif %}</h2>
+
+<div class="glass-card" style="padding: 1rem 2rem;">
+    {% if inventory %}
+    <ul class="inventory-list">
+        {% for item in inventory %}
+        <li class="inventory-item">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <!-- Icono representativo (tienda) -->
+                <div
+                    style="width: 50px; height: 50px; background: rgba(255,255,255,0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                    🏪</div>
+                <div>
+                    <h4 style="font-size: 1.1rem;">{{ item.store_ref.name }}</h4>
+                    <span style="color: var(--text-muted); font-size: 0.9rem;">Ubicación: {{ item.shelf_ref.name
+                        }}</span>
+                </div>
+            </div>
+
+            <div style="text-align: right;">
+                <span class="stock-badge {% if item.qty < 20 %}low{% endif %}">
+                    {{ item.qty }} {% if CURRENT_LANGUAGE == 'es' %}unidades{% else %}units{% endif %}
+                </span>
+            </div>
+
+            <a href="{{ url_for('store_detail', store_id=item.store_ref.id) }}" class="item-action"
+                style="padding: 0.5rem 1rem;">
+                {% if CURRENT_LANGUAGE == 'es' %}Ver Tienda{% else %}View Store{% endif %}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>{% if CURRENT_LANGUAGE == 'es' %}Este producto no tiene stock en ninguna tienda.{% else %}This product is out of
+        stock in all stores.{% endif %}</p>
+    {% endif %}
+</div>
+{% endblock %}
